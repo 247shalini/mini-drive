@@ -1,0 +1,79 @@
+<p class="mt-4">Total Uploaded Files: {{getFormattedNumber total}}</p>
+<button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#upload-file">Upload New
+  File</button>
+<div class="row gy-5 gx-5">
+
+  {{#each files}}
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{this.name}}</h5>
+        <a href="/file/view/{{this._id}}" class="btn btn-primary">View File</a>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#share-file"
+          onclick="setFileId('{{ this._id }}')">Share this file</button>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="upload-file" tabindex="-1" aria-labelledby="upload-file-label" aria-hidden="true">
+  <form class="form" role="form" method="post" action="/file/upload" enctype="multipart/form-data">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="upload-file-label">Upload New File</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <div class="mb-3">
+            <label for="formFile" class="form-label">Select a file</label>
+            <input class="form-control" type="file" id="formFile" name="file" />
+          </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+  <button type="submit" class="btn btn-primary">Upload File</button>
+</div>
+</div>
+</form>
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="share-file" tabindex="-1" aria-labelledby="share-file-label" aria-hidden="true">
+  <form class="form" role="form" method="post" action="/file/permit">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="share-file-label">Share this file</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+  </form>
+  <form class="form" method="POST" action="/email">
+    <div class="modal-body">
+      <div class="mb-3">
+
+        <input type="hidden" name="fileId" id="fileId" />
+        <label for="share-email" class="form-label">Enter multiple emails</label>
+        <input class="form-control" type="email" id="emails" name="emails" />
+        <small id="emailHelp" class="form-text text-muted">Separate multiple emails by using comma(,).</small>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" class="btn btn-primary">Upload File</button>
+    </div>
+  </form>
+</div>
+</div>
+</div>
+
+<script>
+  function setFileId(fileId) {
+    document.getElementById("fileId").value = fileId;
+  }
+</script>
